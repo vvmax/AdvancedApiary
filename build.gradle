@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'com.gtnewhorizons.retrofuturagradle' version '2.0.6'
+}
+group = 'ru.advancedapiary'
+version = '0.6.1'
+base { archivesName = 'AdvancedApiary-1.7.10' }
+java { toolchain { languageVersion = JavaLanguageVersion.of(8) }; withSourcesJar() }
+minecraft { mcVersion = '1.7.10'; username = 'Developer' }
+repositories {
+    exclusiveContent {
+        forRepository { maven { url = 'https://libraries.minecraft.net'; metadataSources { artifact() } } }
+        filter { includeGroup 'lzma' }
+    }
+    mavenCentral()
+}
+dependencies {
+    implementation(rfg.deobf(files('libs/forestry_1.7.10-4.2.16.64.jar')))
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('mcmod.info') { expand 'version': project.version }
+}
+tasks.register('apiaryTest', JavaExec) {
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'ru.advancedapiary.ApiaryTestLauncher'
+}
+tasks.named('check') { dependsOn tasks.named('apiaryTest') }
+// Legacy Forge bootstrap uses an executable integration harness rather than JUnit discovery.
+tasks.named('test') { enabled = false }

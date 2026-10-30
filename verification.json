@@ -1,0 +1,21 @@
+{
+  "version": "0.6.1",
+  "checks": 362,
+  "build": "successful",
+  "in_game_tested": false,
+  "bee_ai_enabled_by_default": true,
+  "disableBeeAI_default": false,
+  "module_types": 17,
+  "garden_upgrade_required_for_internal_plants": true,
+  "plant_slots_per_garden": 4,
+  "stored_plants_preserved_after_upgrade_removal": true,
+  "jar_sha256": "2a8dbe02bdfcb9ece2560dbc503d2814e9da9aada61c27187eb4ae334236df9c",
+  "output_extraction_all_sides": true,
+  "environment_before_flowers": true,
+  "seven_parallel_passes_verified": 8,
+  "balanced_550_tick_output_verified": 20,
+  "static_multipart_block_renderer": true,
+  "third_party_pipes_in_game_tested": false,
+  "item_texture_resolution": 64,
+  "block_texture_resolution": 32
+}
