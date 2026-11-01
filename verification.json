@@ -1,5 +1,5 @@
 {
-  "version": "0.6.1",
+  "version": "0.6.5",
   "checks": 362,
   "build": "successful",
   "in_game_tested": false,
@@ -9,7 +9,7 @@
   "garden_upgrade_required_for_internal_plants": true,
   "plant_slots_per_garden": 4,
   "stored_plants_preserved_after_upgrade_removal": true,
-  "jar_sha256": "2a8dbe02bdfcb9ece2560dbc503d2814e9da9aada61c27187eb4ae334236df9c",
+  "jar_sha256": "0e01d7c152cfc246f9e4f997f72e778397313d69dc7745c1aab4973775f5771e",
   "output_extraction_all_sides": true,
   "environment_before_flowers": true,
   "seven_parallel_passes_verified": 8,
@@ -17,5 +17,14 @@
   "static_multipart_block_renderer": true,
   "third_party_pipes_in_game_tested": false,
   "item_texture_resolution": 64,
-  "block_texture_resolution": 32
+  "block_texture_resolution": 64,
+  "detailed_module_chassis": true,
+  "gui_texture_resolution": 256,
+  "gui_logical_atlas_size": 256,
+  "slot_geometry_preserved": true,
+  "style_preview": "gui-style-preview.png",
+  "gui_restored_from": "0.6.2",
+  "gui_unchanged_byte_for_byte": true,
+  "object_texel_density": 2,
+  "matte_gui_matched_palette": true
 }

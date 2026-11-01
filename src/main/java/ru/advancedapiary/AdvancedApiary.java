@@ -8,7 +8,7 @@ import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-@Mod(modid=AdvancedApiary.ID,name="Advanced Apiary",version="0.6.1",dependencies="required-after:Forestry@[4.2.16,5.0)")
+@Mod(modid=AdvancedApiary.ID,name="Advanced Apiary",version="0.6.5",dependencies="required-after:Forestry@[4.2.16,5.0)")
 public final class AdvancedApiary {
     public static final String ID="advancedapiary";
     @Mod.Instance(ID) public static AdvancedApiary instance;

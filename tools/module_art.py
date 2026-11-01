@@ -3,6 +3,7 @@ Source masters are shipped so the exact texture build is reproducible offline.
 """
 from pathlib import Path
 from PIL import Image,ImageDraw
+from matte_finish import matte
 p=Path(__file__).resolve().parents[1]
 a=p/'tools/art';base=p/'src/main/resources/assets/advancedapiary/textures/items'
 names=['speed','productivity','specialty','parallel','export','focus','sorter','heater','cooler','humidifier','dryer','rain','light','dark','sky','climate']
@@ -13,18 +14,11 @@ for i,name in enumerate(names+['garden']):
  if name=='garden':icon=Image.open(a/'garden-emblem.png').convert('RGBA')
  else:
   w,h=sheet.size;x=i%4;y=i//4;icon=sheet.crop((x*w//4,y*h//4,(x+1)*w//4,(y+1)*h//4))
- icon=icon.resize((40,40),Image.Resampling.LANCZOS).quantize(colors=48,method=Image.Quantize.FASTOCTREE).convert('RGBA')
- # A 64px native item atlas retains small mechanism detail at larger GUI scales.
- t=Image.new('RGBA',(64,64));d=ImageDraw.Draw(t)
- d.polygon([(12,2),(51,2),(60,12),(60,48),(50,58),(12,58),(2,48),(2,12)],fill='#30281f')
- d.rounded_rectangle((6,4,57,55),8,fill='#987444',outline='#f0d39a',width=2)
- d.line((12,6,50,6),fill='#fff0be',width=2);d.line((8,50,54,50),fill='#594529',width=2)
- d.rectangle((10,9,53,51),fill='#172b29',outline='#4d6256',width=2)
- t.alpha_composite(icon,(12,11));d=ImageDraw.Draw(t)
- for x in [8,54]:
-  for y in [10,46]:d.ellipse((x-1,y-1,x+2,y+2),fill='#e6c989');d.line((x,y+1,x+1,y),fill='#59452d')
- for x in range(16,50,6):d.rectangle((x,56,x+3,63),fill='#deb965');d.line((x,56,x,61),fill='#fff0a8')
- d.rectangle((18,8,44,9),fill='#f6dfaa');d.rectangle((14,52,48,54),fill='#534d3b')
+ icon=matte(icon.resize((17,17),Image.Resampling.LANCZOS),24).resize((34,34),Image.Resampling.NEAREST)
+ # Shared shaded chassis is an original asset, composited into a normal item PNG.
+ t=Image.new('RGBA',(64,64));ImageDraw.Draw(t).rectangle((13,13,50,46),fill='#83785a')
+ t.alpha_composite(Image.open(a/'module-chassis-matte.png').convert('RGBA').resize((32,32),Image.Resampling.LANCZOS).resize((64,64),Image.Resampling.NEAREST))
+ t.alpha_composite(icon,(15,13))
  t.save(base/('module_'+name+'.png'))
 preview=Image.new('RGB',(680,3*120),'#292725');d=ImageDraw.Draw(preview)
 for i,name in enumerate(names+['garden']):
@@ -33,4 +27,8 @@ preview.save(p/'modules-preview.png')
 # Refresh the installed-garden GUI example from the actual final item texture.
 f=p/'gui-preview-unlocked.png'
 if f.exists():
- opened=Image.open(f).convert('RGBA');opened.alpha_composite(Image.open(base/'module_garden.png').convert('RGBA'),(89*4,135*4));opened.save(f)
+ opened=Image.open(f).convert('RGBA')
+ atlas=Image.open(p/'src/main/resources/assets/advancedapiary/textures/gui/advanced_apiary.png').convert('RGBA')
+ unit=atlas.width//256
+ opened.paste(atlas.crop((89*unit,135*unit,105*unit,151*unit)).resize((64,64),Image.Resampling.NEAREST),(89*4,135*4))
+ opened.alpha_composite(Image.open(base/'module_garden.png').convert('RGBA'),(89*4,135*4));opened.save(f)

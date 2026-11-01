@@ -3,7 +3,7 @@ plugins {
     id 'com.gtnewhorizons.retrofuturagradle' version '2.0.6'
 }
 group = 'ru.advancedapiary'
-version = '0.6.1'
+version = '0.6.5'
 base { archivesName = 'AdvancedApiary-1.7.10' }
 java { toolchain { languageVersion = JavaLanguageVersion.of(8) }; withSourcesJar() }
 minecraft { mcVersion = '1.7.10'; username = 'Developer' }
